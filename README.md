@@ -1,11 +1,7 @@
 # VNE Inventory Reporting (Wix)
 
-## Overview (ELI5)
-Think of this as a “robot emailer” that sends your reps a weekly list of what you have in stock.
-It runs in the background, grabs inventory data, calculates a few totals, and emails each rep.
-You don’t need to touch your live Wix site pages to make it work.
-
-The goal is to:
+## Overview
+This repository provides a secure, minimal reference implementation for building a **weekly inventory report** for sales reps (and later buyers) using Wix. The goal is to:
 
 - Generate per-rep inventory counts, prices, stock-out dates, last-sold dates, images, and total value/COGS.
 - Send those reports via email on a schedule.
@@ -27,40 +23,17 @@ See [`docs/wix-inventory-report.md`](docs/wix-inventory-report.md) for a detaile
 - **Portability**: the core logic can be used in Wix Velo or in an external server.
 - **Centralized config**: update API endpoints or toggles in `src/reportConfig.js` once instead of hunting through code.
 
-## Step-by-step setup (newbie friendly)
-### Step 1: Decide where your inventory data lives
-Pick one:
-- **Wix Data** (recommended if you already store inventory in Wix).
-- **External API** (use `REPORT_CONFIG.apiBaseUrl`).
-
-### Step 2: Set your config values
-Open `src/reportConfig.js` and update:
-1. `reportEnabled` → `true` to send, `false` to stop sending.
-2. `timeZone` → your timezone (or keep `UTC`).
-3. `apiBaseUrl` → your external API base URL (only if not using Wix Data).
-
-### Step 3: Set your email list
-Add default recipients in `DEFAULT_RECIPIENTS` and add any new recipients using
-the `buildRecipientList` helper.
-
-### Step 4: Add your Wix Scheduled Job
-Create a Scheduled Job in Wix that runs weekly. That job should:
-1. Load inventory data (Wix Data or external API).
-2. Call the report helpers in `src/inventoryReport.js`.
-3. Send a Wix Triggered Email to each rep.
-4. Exit early if `reportEnabled` is `false`.
-
-### Step 5: Test locally (optional but recommended)
-```bash
-npm test
-```
-
 ## Getting started
 ### Prerequisites
 - Node.js 18+
 
 ### Install
 No dependencies are required beyond Node.js.
+
+### Run tests
+```bash
+npm test
+```
 
 ## Configuration
 - **No secrets in code**. Use Wix Secrets Manager or environment variables in external services.
