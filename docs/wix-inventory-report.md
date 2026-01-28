@@ -27,6 +27,7 @@ Send weekly, per-rep inventory reports that include:
    - Use Wix Scheduled Jobs to run weekly.
    - Store last-run timestamps to avoid duplicate sends.
    - Check a kill switch (for example `REPORT_CONFIG.reportEnabled`) before sending.
+   - This runs server-side in Wix; no local machine is required.
 
 ## No-site-interaction option
 If you want this to run without editing the live site UI, keep all logic in **Velo backend files** and **Scheduled Jobs**. This runs entirely server-side and does not require any page code changes.
@@ -55,6 +56,7 @@ You can also run the schedule in Google Apps Script if your data already lives i
    - Invokes report generation.
    - Sends Triggered Emails to reps.
    - Exits early if the kill switch is off.
+   - Uses Wix APIs to fetch data and format JSON for the email template.
 5. **Extend to buyers** by reusing the same job with a different recipient list.
 
 ## Why this design

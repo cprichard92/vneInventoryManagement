@@ -28,6 +28,9 @@ See [`docs/wix-inventory-report.md`](docs/wix-inventory-report.md) for a detaile
 - **Centralized config**: update API endpoints or toggles in `src/reportConfig.js` once instead of hunting through code.
 
 ## Step-by-step setup (newbie friendly)
+### Where does this run?
+It runs on the **server** inside Wix (Velo backend + Scheduled Jobs). You don’t run it on your laptop.
+Wix’s scheduler triggers it automatically (weekly, or whatever schedule you choose).
 ### Step 1: Decide where your inventory data lives
 Pick one:
 - **Wix Data** (recommended if you already store inventory in Wix).
@@ -45,10 +48,11 @@ the `buildRecipientList` helper.
 
 ### Step 4: Add your Wix Scheduled Job
 Create a Scheduled Job in Wix that runs weekly. That job should:
-1. Load inventory data (Wix Data or external API).
-2. Call the report helpers in `src/inventoryReport.js`.
-3. Send a Wix Triggered Email to each rep.
-4. Exit early if `reportEnabled` is `false`.
+1. Fetch inventory data from **Wix APIs** (or your external API).
+2. Convert the data to JSON in the format expected by `buildInventoryReport`.
+3. Format the email body with `formatRepEmail`.
+4. Send a Wix Triggered Email to each rep.
+5. Exit early if `reportEnabled` is `false`.
 
 ### Step 5: Test locally (optional but recommended)
 ```bash
