@@ -52,12 +52,20 @@ You can also run the schedule in Google Apps Script if your data already lives i
 3. **Create a backend module** that:
    - Queries inventory + assignments.
    - Builds per-rep reports.
+   - Lives in `backend/reportRunner.jsw` (Wix Velo backend module).
 4. **Create a scheduled job** that:
    - Invokes report generation.
    - Sends Triggered Emails to reps.
    - Exits early if the kill switch is off.
    - Uses Wix APIs to fetch data and format JSON for the email template.
+   - Lives in `backend/jobs/weeklyReport.js` (Wix Scheduled Job).
 5. **Extend to buyers** by reusing the same job with a different recipient list.
+
+## Wix file placement (copy/paste friendly)
+- **Backend module**: `backend/reportRunner.jsw`
+- **Scheduled job**: `backend/jobs/weeklyReport.js`
+
+These are created in Wix Velo under **Backend** and **Backend → Jobs**.
 
 ## Why this design
 This splits responsibilities cleanly: Wix handles scheduling and email delivery while shared logic stays testable and portable.

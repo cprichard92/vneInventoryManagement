@@ -54,6 +54,20 @@ Create a Scheduled Job in Wix that runs weekly. That job should:
 4. Send a Wix Triggered Email to each rep.
 5. Exit early if `reportEnabled` is `false`.
 
+### Step 4a: Where to put the Wix code (exact file locations)
+In the Wix editor (Velo):
+1. Open **Backend** in the left sidebar.
+2. Create a file under **Backend** → `reportRunner.jsw` (shared backend module).
+3. Create a file under **Backend** → **Jobs** → `weeklyReport.js`.
+
+Your **backend module** (`reportRunner.jsw`) holds the reusable logic:
+- Fetch inventory data from Wix APIs.
+- Call `buildInventoryReport` and `formatRepEmail`.
+- Send Wix Triggered Emails.
+
+Your **job file** (`backend/jobs/weeklyReport.js`) runs on a schedule and calls the backend module.
+This is what makes the report send automatically each week.
+
 ### Step 5: Test locally (optional but recommended)
 ```bash
 npm test
